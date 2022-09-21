@@ -8,46 +8,54 @@
     const container = document.querySelector('#container')
 
     getUsers()
-    
+    //create get user function
     function getUsers() {
-       let button = document.querySelector('#btn');
+       let button = document.querySelector('#btn');//reference the button element
     
-       button.addEventListener('click', getFunc)
+       button.addEventListener('click', getFunc)//add an event listener method to that element; with click and callback function
     }
     
+    //once button is clicked; it triggers get func
        function getFunc(){
-        $('#btn').hide()
-        $.get("https://jsonplaceholder.typicode.com/users", getUserData)
+        $('#btn').hide()//hides button once clicked on
+        $.get("https://jsonplaceholder.typicode.com/users", getUserData)//request data using jquery get method; include url to API and function to push data to
        }
     
+       //getUserData receives data from API
        function getUserData(data){
+        //loop through data
     for (let i = 0; i < data.length; i++){
+        //create variable once you know where to create a variable to reference
+        //may need to console.log data so yoo know what you are accessing prior to making variable
         let userData = data[i];
-        makeDivs(userData);
+        makeDivs(userData);//call function passing in data accessed
         }
        }
-    
+       //create a make divs function
        function makeDivs(userData){
         // var userName = userData.username;
         // var city = userData.address.city;
-        var name = userData.name;
-        var id = userData.id;
-    
-        var mainContainer = document.createElement('div');
-            mainContainer.className = 'user-container'
+        var name = userData.name;//create vars for data you want to access
+        var id = userData.id;//create vars for data you want to access
+        
+        var mainContainer = document.createElement('div');//create the div container
+            mainContainer.className = 'user-container'//give it a class
             mainContainer.id = id;
     
-            mainContainer.append(`Name: ${name}`);
+            mainContainer.append(`Name: ${name}`);//append the data that was passed in the function to container
     
-        container.append(mainContainer);
+        container.append(mainContainer);//append main container to container
     
-            mainContainer.addEventListener('click', getuserPosts)
+            mainContainer.addEventListener('click', getuserPosts)//when main container is clicked on, getuserposts is used as callback
        }
     
+    //getusers passes in e for event object
        function getuserPosts(e) {
+        //use get jquery method to request for data at the e target id; accessposts is used as call back func
         $.get(`https://jsonplaceholder.typicode.com/posts?userId=${e.target.id}`, accessPost)
        }
-    
+       
+       //accesspost func passes in postdata
        function accessPost(postData){
         $('.btn').hide();
         returnButton()
